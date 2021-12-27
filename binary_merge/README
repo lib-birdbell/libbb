@@ -1,0 +1,5 @@
+This program merge 2 files. Space was filled with 0xFF.
+
+How to use
+
+# merge.sh [filesize(Kbyte)] [1st file] [1st file address] [2nd file] [2nd file address]
