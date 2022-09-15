@@ -12,6 +12,7 @@ int main(int argc, char** argv){
 	unsigned int hex;
 	unsigned int nSectionBaseAddress;
 	unsigned int AP;
+	unsigned int nPageBaseAddress;
 	int levelone;
 
 	printf("APP calc mmu(memory management unit)\n");
@@ -31,7 +32,7 @@ int main(int argc, char** argv){
 	
 		levelone = (hex&0x03);
 		switch(levelone){
-			case 1:
+			case LEVEL_PAGE:
 				printf("level one Page\n");
 				break;
 			case LEVEL_SECTION:
@@ -69,6 +70,16 @@ int main(int argc, char** argv){
 				default:
 					break;
 			}
+		}else if(levelone == LEVEL_PAGE){
+			nPageBaseAddress = (hex & 0xFFFFFC00);
+			printf("Page Base Address = %xh\n", nPageBaseAddress);
+			if(hex & 0x00000200){
+				printf("warning : bit 9 sbz\n");
+			}
+			if(!(hex & 0x00000010)){
+				printf("warning : bit 4 sbo\n");
+			}
+			printf("Domain=%xh\n", (hex & 0x000001E0) >> 5);
 		}
 	}else if(strcmp(argv[1], "-a") == 0){
 		//printf("Virt Address = %xh\n", hex*0x100000);
